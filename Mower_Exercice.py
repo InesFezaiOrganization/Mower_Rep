@@ -1,3 +1,5 @@
+import re
+
 def get_dimensions(f_Tondeuse):
     """ Recuperate the lawn dimensions from Tondeuse.txt.
     
