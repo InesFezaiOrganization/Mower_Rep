@@ -42,6 +42,33 @@ def get_initial_position_direction(f_pos_dir):
         raise NotImplementedError("Mower initial positions are negative !")
     return espace_i,espace_j, direction
 
+def To_move(instructions,current_i,current_j,current_direction,espace_i,espace_j):
+    """ Manage the flow of a mower's instructions.
+    
+    Parameters
+    ----------
+    instructions (string): The string containing instructions.
+    current_i (int): The current position of the mower on the axis I.
+    current_j (int): The current position of the mower on the axis J.
+    current_direction (string): The current direction of the mower.
+    espace_i (int): The length of the axis I.
+    espace_j (int): The length of the axis J.
+    
+    Returns
+    ----------
+    int: The updated current position of the mower on the axis I.
+    int: The updated current position of the mower on the axis J.
+    string: The updated current direction of a mower.
+    
+    """
+    for i in instructions:
+        if i=="A":
+            #Adding To_advance function
+        else :
+            #Adding Manage_direction
+    return current_i,current_j,current_direction
+
+
 
 
 
@@ -54,6 +81,7 @@ def main():
     
     for i in range(1,int((len(f_Tondeuse)+1)/2)):
         current_i,current_j,current_direction= get_initial_position_direction(f_Tondeuse[2*i-1])
+        instructions=re.sub(r"[^A-Za-z]+", '', f_Tondeuse[2*i])
     
 
     
