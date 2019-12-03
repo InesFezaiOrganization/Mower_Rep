@@ -42,6 +42,57 @@ def get_initial_position_direction(f_pos_dir):
         raise NotImplementedError("Mower initial positions are negative !")
     return espace_i,espace_j, direction
 
+
+def To_advance(current_i,current_j,current_direction,espace_i,espace_j):
+    """ Updates the current positions after verifying tha the mower dosn't exceed the the lawn surface.
+    
+    Parameters
+    ----------
+    current_i (int): The current position of the mower on the axis I.
+    current_j (int): The current position of the mower on the axis J.
+    current_direction (string): The current direction of the mower.
+    espace_i (int): The length of the axis I.
+    espace_j (int): The length of the axis J.
+    
+    Returns
+    ----------
+    int: The updated current position of a mower on the axis I.
+    int: The updated current position of a mower on the axis J.
+    
+    """
+    if current_direction=="N" and current_j+1<=espace_j:
+        current_j+=1
+    elif current_direction=="S" and current_j-1>=0:
+        current_j-=1
+    elif current_direction=="E" and current_i+1<=espace_i:
+        current_i+=1
+    elif current_direction=="W" and current_j-1>=0:
+        current_i-=1
+    
+    return current_i,current_j
+
+def Manage_direction(current_direction,i):
+    """ Updates the current direction of a mower.
+    
+    Parameters
+    ----------
+    current_direction (string): The current direction of the mower.
+    
+    Returns
+    ----------
+    string: The updated current direction of a mower.
+    
+    """
+    dict_G={"N": "W", "S": "E", "E": "N", "W": "S"} 
+    dict_D={"N": "E", "S": "W", "W": "N", "E":"S"}
+    if i=="G":
+        current_direction=dict_G[current_direction]
+    else:
+        current_direction=dict_D[current_direction]
+    
+    return current_direction
+
+
 def To_move(instructions,current_i,current_j,current_direction,espace_i,espace_j):
     """ Manage the flow of a mower's instructions.
     
@@ -63,9 +114,10 @@ def To_move(instructions,current_i,current_j,current_direction,espace_i,espace_j
     """
     for i in instructions:
         if i=="A":
-            #Adding To_advance function
+            current_i,current_j=To_advance(current_i,current_j,current_direction,espace_i,espace_j)
         else :
-            #Adding Manage_direction
+            current_direction=Manage_direction(current_direction,i)
+            
     return current_i,current_j,current_direction
 
 
@@ -82,6 +134,8 @@ def main():
     for i in range(1,int((len(f_Tondeuse)+1)/2)):
         current_i,current_j,current_direction= get_initial_position_direction(f_Tondeuse[2*i-1])
         instructions=re.sub(r"[^A-Za-z]+", '', f_Tondeuse[2*i])
+        print("Mower number ",i,"has this coordinates: ",To_move(instructions,current_i,current_j,current_direction,espace_i,espace_j))
+
     
 
     
