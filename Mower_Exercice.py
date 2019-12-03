@@ -1,4 +1,4 @@
-import re
+import regex
 
 def get_dimensions(f_Tondeuse):
     """ Recuperate the lawn dimensions from Tondeuse.txt.
@@ -135,7 +135,7 @@ def main():
     
     for i in range(1,int((len(f_Tondeuse)+1)/2)):
         current_i,current_j,current_direction= get_initial_position_direction(f_Tondeuse[2*i-1])
-        instructions=re.sub(r"[^A-Za-z]+", '', f_Tondeuse[2*i])
+        instructions=regex.sub(r"[^A-Za-z]+", '', f_Tondeuse[2*i])
         print("Mower number ",i,"has this coordinates: ",To_move(instructions,current_i,current_j,current_direction,espace_i,espace_j))
 
     
